@@ -191,21 +191,32 @@
 
     // console.log(timeNodes); -> look like an array but is a nodelist => spread into an array
 
-    const second = timeNodes.map((node) => node.dataset.time)
-    //-> return an array of string '5:43', '2:45',...
+    // const second = timeNodes.map((node) => node.dataset.time)
+    // //-> return an array of string '5:43', '2:45',...
 
-    //spilt string into min and sec
-    const split = second.map((timeCode) => {
-      const [min, sec] = timeCode.split(':').map(parseFloat);
-      return min * 60 + sec;
-    })
-    //vi '6:10'.split(":") -> an array [`6`,`10`] -> they are string
-    //'6:10'.split(":").map(parseFloat) = '6:10'.split(":").map(function(str) {return parseFloat(str)}
+    // //spilt string into min and sec
+    // const split = second.map((timeCode) => {
+    //   const [min, sec] = timeCode.split(':').map(parseFloat);
+    //   return min * 60 + sec;
+    // })
+    // //vi '6:10'.split(":") -> an array [`6`,`10`] -> they are string
+    // //'6:10'.split(":").map(parseFloat) = '6:10'.split(":").map(function(str) {return parseFloat(str)}
 
-    console.log(split); // -> is an array of each vid's length in seconds
+    // console.log(split); // -> is an array of each vid's length in seconds
 
-    const result = split.reduce((total, vidSec) => total + vidSec);
-    console.log(result)
+    // const result = split.reduce((total, vidSec) => total + vidSec);
+    // console.log(result)
+
+    const result = timeNodes
+      .map((node) => node.dataset.time)
+      .map((node) => {
+        const [min, sec] = node.split(":").map(parseFloat);
+        return min * 60 + sec;
+      })
+      .reduce((total, vidSec) => {
+        return total + vidSec;
+      });
+
 
     let secLeft = result;
     const hour = Math.floor(secLeft / 3600);
