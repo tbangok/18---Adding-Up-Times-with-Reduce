@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Videos</title>
   <link rel="icon" href="https://fav.farm/🔥" />
 </head>
+
 <body>
   <ul class="videos">
     <li data-time="5:43">
@@ -182,7 +184,41 @@
       Video 58
     </li>
   </ul>
-<script>
-</script>
+
+  <script>
+
+    const timeNodes = [...document.querySelectorAll('[data-time]')];
+
+    // console.log(timeNodes); -> look like an array but is a nodelist => spread into an array
+
+    const second = timeNodes.map((node) => node.dataset.time)
+    //-> return an array of string '5:43', '2:45',...
+
+    //spilt string into min and sec
+    const split = second.map((timeCode) => {
+      const [min, sec] = timeCode.split(':').map(parseFloat);
+      return min * 60 + sec;
+    })
+    //vi '6:10'.split(":") -> an array [`6`,`10`] -> they are string
+    //'6:10'.split(":").map(parseFloat) = '6:10'.split(":").map(function(str) {return parseFloat(str)}
+
+    console.log(split); // -> is an array of each vid's length in seconds
+
+    const result = split.reduce((total, vidSec) => total + vidSec);
+    console.log(result)
+
+    let secLeft = result;
+    const hour = Math.floor(secLeft / 3600);
+    secLeft = secLeft % 3600;
+    console.log(secLeft, hour);
+
+    const min = Math.floor(secLeft / 60);
+    secLeft = secLeft % 60;
+    console.log(hour, min, secLeft);
+
+
+
+  </script>
 </body>
+
 </html>
